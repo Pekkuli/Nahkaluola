@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Urheilu uutiset</title>
+		<h1>Tervetuloa UutisLuolaan</h1> 
+		
+        <a href="/0">Kotimaan uutiset</a> &nbsp&nbsp
+        <a href="/1">Politiikka</a> &nbsp&nbsp
+        <a href="/2">Kaupunki</a> &nbsp&nbsp
+        <a href="/3">Ulkomaan uutiset</a> &nbsp &nbsp
+        <a href="/4">Talousuutiset</a> &nbsp &nbsp
+        <a href="/5">Urheilu uutiset</a> &nbsp&nbsp
+        <a href="/6">Kulttuuri uutiset</a> <br><br>
+		<a href="/">Etusivulle</a>
+		
+    </head>
+    <body>
+        <h1>Urheilu Uutiset</h1>
+
+        <ol>
+            <li th:each="uutinen : ${uutiset}">
+                <span th:text="${uutinen.otsikko}"></span> <span th:text="${uutinen.julkaisuDate}"></span>
+            </li>
+        </ol>
+    </body>
+</html>

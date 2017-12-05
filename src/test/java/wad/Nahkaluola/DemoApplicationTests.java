@@ -1,4 +1,4 @@
-package com.example.Nahkaluola;
+package wad.Nahkaluola;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
