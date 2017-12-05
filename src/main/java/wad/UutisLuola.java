@@ -20,14 +20,4 @@ public class UutisLuola {
     public static void main(String[] args) {
         SpringApplication.run(UutisLuola.class, args);
     }
-    
-    public enum Kategoria {
-    Kotimaa,
-    Politiikka,
-    Kaupunki,
-    Ulkomaat,
-    Talous,
-    Urheilu,
-    Kulttuuri
-}
 }

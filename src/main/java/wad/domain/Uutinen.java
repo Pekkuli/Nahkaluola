@@ -11,7 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.AbstractPersistable;
-import wad.UutisLuola.Kategoria;
+import wad.controller.UutisController;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,18 +30,19 @@ public class Uutinen extends AbstractPersistable<Long>{
     
     @Column
     @ElementCollection
-    private List<Kategoria> kategoriat;
+    private List<Integer> kategoriat;
     @Column
     @ElementCollection
     private List<String> kirjoittajat;
     
-    public Uutinen(String otsikko, String ingressi, String sisalto,LocalDate julkaisuDate){
+    public Uutinen(String otsikko, String ingressi, String sisalto,LocalDate julkaisuDate, int kategoriaId){
         this.otsikko=otsikko;
         this.ingressi=ingressi;
         this.sisalto=sisalto;
         this.kategoriat = new ArrayList();
         this.kirjoittajat= new ArrayList();
         this.julkaisuDate=julkaisuDate;
+        this.kategoriat.add(kategoriaId);
     }
     
 }
