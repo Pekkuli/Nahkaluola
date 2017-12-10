@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title th:text="${kategoria}"n Uutiset ></title>
+		<style>
+				body  {
+					background-image: url("");
+				}
+					div {
+						background-color: lightgrey;
+						width: 800px;
+						border: 25px solid green;
+						padding: 25px;
+						margin: 25px;
+					}
+					.laatikko { 
+						float: left;
+						width: 150px;
+						margin: 15px;
+					}
+					li {
+						clear: left;
+						max-height: 5px;
+					}
+					p {
+						margin-left: 40px;
+					}
+					.container {
+						width: 500px;
+						clear: both;
+					}
+					.container input {
+						width: 100%;
+						clear: both;
+					}
+		</style>
+    </head>
+    <div><body>
+        <a href="/kategoria/0">Kotimaan Uutiset</a> &nbsp&nbsp
+        <a href="/kategoria/1">Politiikka</a> &nbsp&nbsp
+        <a href="/kategoria/2">Kaupunki</a> &nbsp&nbsp
+        <a href="/kategoria/3">Ulkomaan Uutiset</a> &nbsp &nbsp
+        <a href="/kategoria/4">Talousuutiset</a> &nbsp &nbsp
+        <a href="/kategoria/5">Urheilu</a> &nbsp&nbsp
+        <a href="/kategoria/6">Kulttuuri</a> <br><br>
+		<a href="/etusivu">Etusivulle</a> <br><br>
+		<a href="javascript:history.back()">Takaisin</a>
+        <h1>Muokkaus sivu</h1> 
+        
+		<p> <b><span class="laatikko">Aihe</span> <span class="laatikko">Luettu</span> <span class="laatikko" >Päiväys</span></b></p>
+        <ul style="list-style-type:none">
+            <li th:each="uutinen: ${uutiset}">
+                <a class='laatikko' th:href="@{/muokkaus/{id}(id=${uutinen.id})}"> <span th:text="${uutinen.otsikko}"></span> </a> <span class='laatikko' th:text="${uutinen.views} + ' kertaa'"></span> <span class='laatikko' th:text="${uutinen.julkaisuDate}"></span>
+				<form th:action="@{/muokkaus/{id}(id=${uutinen.id})}" th:method="DELETE">
+                    <input type="submit" value="Remove" th:id="${'remove-' + uutinen.id}"/>
+                </form>
+			</li>
+        </ul>
+		<br><br><br><br>
+		</div>
+		<div class="container">
+		<form action="#" th:action="@{/muokkaus}" th:object="${uutinen}" method="post">
+		<table>
+			<label>Otsikko:</label><br/>
+			<input type="text" th:field="*{otsikko}"/><br/>
+			<label>Ingressi:</label><br/>
+			<textarea rows="5" cols="40" style="margin-top: 10px; margin-bottom: 10px; margin-left: 90px;" th:field="*{ingressi}"/></textarea><br/>
+			<label>Sisältö:</label><br/>
+            <textarea rows="10" cols="40" style="margin-top: 10px; margin-bottom: 10px; margin-left: 90px;" th:field="*{sisalto}"></textarea><br/>
+			<label>Kirjoittajat:</label><br/>
+			<input type="text" th:field="*{kirjoittajat}"/><br/>
+			
+
+			<h2>Uutisen kategoriat:</h2> 
+			<input type="checkbox" name="vehicle" value="kotimaa"> Kotimaan Uutiset
+			<input type="checkbox" name="vehicle" value="politiikka" > Politiikka
+			<input type="checkbox" name="vehicle" value="kaupunki"> Kaupunki
+			<input type="checkbox" name="vehicle" value="ulkomaan" > Ulkomaan Uutiset
+			<input type="checkbox" name="vehicle" value="talous"> Talousuutiset
+			<input type="checkbox" name="vehicle" value="urheilu" > Urheilu
+			<input type="checkbox" name="vehicle" value="kulttuuri" > Kulttuuri
+            <button type="submit">L&#228;het&#228;</button>
+		<table>
+        </form>
+		</div>
+    </body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title th:text="${kategoria}"n Uutiset ></title>
+		<style>
+				body  {
+					background-image: url("");
+				}
+					div {
+						background-color: lightgrey;
+						width: 800px;
+						border: 25px solid green;
+						padding: 25px;
+						margin: 25px;
+					}
+					.laatikko { 
+						float: left;
+						margin: 15px;
+					}
+					li {
+						clear: left;
+						max-height: 5px;
+					}
+					p {
+						margin-left: 40px;
+					}
+		</style>
+		<script>
+            function validate() {
+                var x = document.forms["lomake"]["aiheOtsikko"].value;
+                var y = document.forms["lomake"]["viestiTeksti"].value;
+                if (x == "") {
+                    alert("Otsikko ei voi olla tyhjä");
+                    return false;
+                }
+                if (y == "") {
+                    alert("Viesti ei voi olla tyhjä");
+                    return false;
+                }
+            }
+        </script>
+    </head>
+    <div><body>
+	
+        <a href="/kategoria/0">Kotimaan Uutiset</a> &nbsp&nbsp
+        <a href="/kategoria/1">Politiikka</a> &nbsp&nbsp
+        <a href="/kategoria/2">Kaupunki</a> &nbsp&nbsp
+        <a href="/kategoria/3">Ulkomaan Uutiset</a> &nbsp &nbsp
+        <a href="/kategoria/4">Talousuutiset</a> &nbsp &nbsp
+        <a href="/kategoria/5">Urheilu</a> &nbsp&nbsp
+        <a href="/kategoria/6">Kulttuuri</a> <br><br>
+		<a href="/etusivu">Etusivulle</a> <br><br>
+        <a href="/muokkaus">Takaisin muokkaamaan</a>
+        <h1>Muokkaus sivu</h1> 
+
+        <ol>
+            <h2> Otsikko </h2>
+            <p th:text="${uutinen.otsikko}"><p/>
+            <h2> Kategoriat: </h2>   
+            <ul>
+                
+				<li th:each="kategoria: ${uutinen.kategoriat}">
+					<span class='laatikko'></span>
+					<form th:method="post" th:action="@{/muokkaus/{id}/poistakategoria(id=${uutinen.id})}" name="poistakategoria"> 
+						<span th:text="${kategoria}"></span>
+						<input type="hidden" name="poistakategoria" th:value="${kategoria}">
+						<input type="submit" value="Poista kategoria"/>
+					</form><br><br></span>
+				</li>
+            </ul><br><br>
+			<h2> Kirjoittajat: </h2>
+			
+			<ul>
+				<li th:each="kirjoittaja: ${uutinen.kirjoittajat}">
+					<span class='laatikko'></span>
+					<form th:method="post" th:action="@{/muokkaus/{id}/poistakirjoittaja(id=${uutinen.id})}" name="poistakirjoittaja"> 
+						<span th:text="${kirjoittaja}"></span>
+						<input type="hidden" name="poistakirjoittaja" th:value="${kirjoittaja}">
+						<input type="submit" value="Poista kirjoittaja" />
+					</form><br><br></span>
+				</li>
+			</ul><br><br>
+			<h2> Lisää kuva</h2>
+			<form method="POST" th:action="@{/kuvat}" enctype="multipart/form-data">
+				<input type="file" name="file" id="file"/>
+				<input type="hidden" name="${uutinen.otsikko}"/>
+				<input type="submit" value="Lisää"/>
+			</form><br><br>
+			
+			
+            
+            <h2> Ingressi </h2>
+            <p th:text="${uutinen.ingressi}"><p/>
+            <h2> Sisältö </h2>
+            <p th:text="${uutinen.sisalto}"><p/>
+        </ol>
+		
+		
+		
+		<h2> Muuta uutisen tietoja</h2>
+		<form method="post" th:action="@{/muokkaus/{id}/lisaakategoria(id=${uutinen.id})}" name="lisaakategoria" >Lisää kategorioita:   
+			<select name="lisaakategoria">
+			  <option value="0">Kotimaan Uutiset</option>
+			  <option value="1">Politiikka</option>
+			  <option value="2">Kaupunki</option>
+			  <option value="3">Ulkomaan Uutiset</option>
+			  <option value="4">Talousuutiset</option>
+			  <option value="5">Urheilu</option>
+			  <option value="6">Kulttuuri</option>
+			</select>
+			<input type="submit" value="Lisää"/>
+		</form>
+		<br><br>
+		
+		
+		
+		<form th:action="@{/muokkaus/{id}/lisaakirjoittaja(id=${uutinen.id})}" method="post" name="lomake"  onsubmit="return validate()">
+            Lisaa kirjoittaja<input type="text" name="lisaakirjoittaja" />
+            <button type="submit">Päivitä</button>
+        </form>
+		<br><br>
+		
+		<form th:action="@{/muokkaus/{id}(id=${uutinen.id})}" method="post">
+            Uusi otsikko: <br><br>
+						<textarea rows="1" cols="80"  name="otsikko"></textarea>
+						<input type="submit" value="Muuta"/>
+        </form> <br>
+		
+		<form th:action="@{/muokkaus/{id}(id=${uutinen.id})}" method="post">
+            Uusi ingressi: <br><br>
+				<textarea rows="10" cols="80"  name="ingressi"></textarea>
+				<input type="submit" value="Päivitä"/>
+        </form><br>
+		
+		<form th:action="@{/muokkaus/{id}(id=${uutinen.id})}" method="post">
+            Uusi sisältö: <br><br>
+				<textarea rows="20" cols="80"  name="sisalto"></textarea>
+				<input type="submit" value="Päivitä"/>
+        </form>
+		
+    </body></div>
+</html>
