@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import wad.file.FileObject;
 
 
-public interface GifRepository  extends JpaRepository<FileObject, Long> {
+public interface KuvaRepository  extends JpaRepository<FileObject, Long> {
 }

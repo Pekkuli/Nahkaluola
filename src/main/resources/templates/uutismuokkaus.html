@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8" />
-        <title th:text="${kategoria}"n Uutiset ></title>
+        <title>Uutisen muokkaus</title>
 		<style>
 				body  {
 					background-image: url("");
@@ -24,6 +24,14 @@
 					}
 					p {
 						margin-left: 40px;
+					}
+					img {
+						max-width: 100%;
+						max-height: 100%;
+					}
+					.landscape {
+						height: 30px;
+						width: 70px;
 					}
 		</style>
 		<script>
@@ -53,10 +61,14 @@
 		<a href="/etusivu">Etusivulle</a> <br><br>
         <a href="/muokkaus">Takaisin muokkaamaan</a>
         <h1>Muokkaus sivu</h1> 
-
         <ol>
             <h2> Otsikko </h2>
             <p th:text="${uutinen.otsikko}"><p/>
+			
+			<h2> Kuva </h2>
+			<picture th:if="${uutinen.kuvaId != null}"><span >
+				<img th:src="@{/kuvat/{id}/content(id=${uutinen.kuvaId})}"/>
+			</picture>
             <h2> Kategoriat: </h2>   
             <ul>
                 
@@ -82,10 +94,9 @@
 				</li>
 			</ul><br><br>
 			<h2> Lisää kuva</h2>
-			<form method="POST" th:action="@{/kuvat}" enctype="multipart/form-data">
+			<form method="POST" th:action="@{/muokkaus/{id}/lisaakuva(id=${uutinen.id})}" enctype="multipart/form-data">
 				<input type="file" name="file" id="file"/>
-				<input type="hidden" name="${uutinen.otsikko}"/>
-				<input type="submit" value="Lisää"/>
+				<input type="submit" value="Add!"/>
 			</form><br><br>
 			
 			

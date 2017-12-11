@@ -28,13 +28,10 @@ public class Uutinen extends AbstractPersistable<Long>{
     private String otsikko;
     private String ingressi;
     private String sisalto;
-    private int views;
+    private double views;
     private LocalDate julkaisuDate;
     private int identifier;
-    
-    @ElementCollection
-    @OneToOne
-    private FileObject fileobject;
+    private Long kuvaId;
   
     
     @Column
@@ -55,7 +52,7 @@ public class Uutinen extends AbstractPersistable<Long>{
     }
     
     public void view(){
-        this.views++;
+        this.views+=0.5;
     }
     
     public void LisaaKategoria(String kategoria){
@@ -72,6 +69,10 @@ public class Uutinen extends AbstractPersistable<Long>{
     
     public void PoistaKirjoittaja(String kirjoittaja){
         this.kirjoittajat.remove(kirjoittaja);
+    }
+    
+    public void lisaaKuva(Long kuvaId){
+        this.kuvaId=kuvaId;
     }
     
     
