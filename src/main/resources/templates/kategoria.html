@@ -43,13 +43,16 @@
 		
         <h1 th:text="${kategoria}" ></h1>
 		
-		<p> <b><span class="laatikko">Aihe</span> <span class="laatikko">Luettu</span> <span class="laatikko" >Päiväys</span></b></p>
+		<p> <b><span class="laatikko">Otsikko</span> 
+		<span class="laatikko">Luettu</span> 
+		<span class="laatikko" >Päiväys</span></b></p>
+		
         <ul style="list-style-type:none">
             <li th:each="uutinen: ${uutiset}">
                 <a class='laatikko' th:href="@{/uutinen/{id}(id=${uutinen.id})}"> 
 				<span th:text="${uutinen.otsikko}"></span> </a> 
 				<span class='laatikko' th:text="${uutinen.views} + ' kertaa'"></span> 
-				<span class='laatikko' th:text="${uutinen.julkaisuDate}"></span>
+				<span class='laatikko' th:text="${uutinen.Date}"></span>
             </li>
         </ul>
 		<br><br><br><br>

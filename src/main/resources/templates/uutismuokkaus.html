@@ -96,7 +96,7 @@
 			<h2> Lisää kuva</h2>
 			<form method="POST" th:action="@{/muokkaus/{id}/lisaakuva(id=${uutinen.id})}" enctype="multipart/form-data">
 				<input type="file" name="file" id="file"/>
-				<input type="submit" value="Add!"/>
+				<input type="submit" value="Lisää kuva"/>
 			</form><br><br>
 			
 			
@@ -106,11 +106,12 @@
             <h2> Sisältö </h2>
             <p th:text="${uutinen.sisalto}"><p/>
         </ol>
-		
-		
-		
 		<h2> Muuta uutisen tietoja</h2>
-		<form method="post" th:action="@{/muokkaus/{id}/lisaakategoria(id=${uutinen.id})}" name="lisaakategoria" >Lisää kategorioita:   
+		
+		
+		
+		<form method="post" th:action="@{/muokkaus/{id}/lisaakategoria(id=${uutinen.id})}" name="lisaakategoria" >
+			Lisää kategorioita:   
 			<select name="lisaakategoria">
 			  <option value="0">Kotimaan Uutiset</option>
 			  <option value="1">Politiikka</option>
@@ -126,7 +127,7 @@
 		
 		
 		
-		<form th:action="@{/muokkaus/{id}/lisaakirjoittaja(id=${uutinen.id})}" method="post" name="lomake"  onsubmit="return validate()">
+		<form th:action="@{/muokkaus/{id}/lisaakirjoittaja(id=${uutinen.id})}" method="post" name="lomake">
             Lisaa kirjoittaja<input type="text" name="lisaakirjoittaja" />
             <button type="submit">Päivitä</button>
         </form>
@@ -135,14 +136,16 @@
 		<form th:action="@{/muokkaus/{id}(id=${uutinen.id})}" method="post">
             Uusi otsikko: <br><br>
 						<textarea rows="1" cols="80"  name="otsikko"></textarea>
-						<input type="submit" value="Muuta"/>
+						<input type="submit" value="Päivitä"/>
         </form> <br>
+		
 		
 		<form th:action="@{/muokkaus/{id}(id=${uutinen.id})}" method="post">
             Uusi ingressi: <br><br>
 				<textarea rows="10" cols="80"  name="ingressi"></textarea>
 				<input type="submit" value="Päivitä"/>
         </form><br>
+		
 		
 		<form th:action="@{/muokkaus/{id}(id=${uutinen.id})}" method="post">
             Uusi sisältö: <br><br>

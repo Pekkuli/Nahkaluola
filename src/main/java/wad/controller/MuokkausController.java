@@ -5,12 +5,18 @@
  */
 package wad.controller;
 
+import wad.CustomComparator;
 import java.io.IOException;
-import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,19 +45,47 @@ public class MuokkausController {
                                     "Urheilu",
                                     "Kulttuuri"}; 
     
+//    Uutisten hallinan pääsivu
+    @GetMapping("/muokkaus")
+    public String uutinen(Model model,@ModelAttribute Uutinen uutinen){
+        List uutiset = uutisRepo.findAll();
+        Collections.sort(uutiset, new CustomComparator());
+        model.addAttribute("uutiset", uutiset);
+        return "muokkaus";
+    }
+    
+//    Yksittäisen uutisen hallintasivu
+    @GetMapping("/muokkaus/{id}")
+    public String uutinen(Model model,@PathVariable Long id){
+        model.addAttribute("uutinen", uutisRepo.getOne(id));
+        return "uutismuokkaus";
+    }
+    
+    @DeleteMapping("/muokkaus/{uutisId}")
+    public String deleteUutinen(@PathVariable Long uutisId) {
+        Uutinen uutinen = uutisRepo.getOne(uutisId);
+        uutisRepo.delete(uutinen);
+        return "redirect:/muokkaus";
+    }
+    
+//    Uuden uutisen luonti
     @PostMapping("/muokkaus")
     public String AddUutinen(){
-        LocalDate julkaisuDate = LocalDate.now();
+        Date julkaisuDate = Calendar.getInstance().getTime();
         Uutinen uutinen = new Uutinen();
-        Long DateTime = new Date().getTime();
-        uutinen.setOtsikko("Tyhjä["+DateTime+"]");
+        uutinen.setOtsikko("Tyhjä["+julkaisuDate.getTime()+"]");
         uutinen.setIngressi("tyhjä");
         uutinen.setSisalto("tyhjä");
-        uutinen.setJulkaisuDate(julkaisuDate);
+        uutinen.SetDate(julkaisuDate);
         uutisRepo.save(uutinen);
-        return "redirect:/muokkaus/"+uutisRepo.findByIdentifierAndOtsikko
-                    (uutinen.getIdentifier(),uutinen.getOtsikko()).getId();
+        return "redirect:/muokkaus/"+uutisRepo.findByIdentifier(uutinen.getIdentifier()).getId();
     }
+    
+    
+//    Yksittäisen uutisen muokkaamiseen liittyvät funktiot järjestyksessä:
+//    otsikon muokkaus, ingressin muokkaus, sisällön muokkaus, 
+//    kategorian lisäys, kategorian poisto, 
+//    kirjoittajan lisäys, kirjoittajan poisto
     
     @RequestMapping(value="/muokkaus/{uutisId}", params="otsikko")
     public String muokkaaOtsikko(@PathVariable Long uutisId,@RequestParam String otsikko){
@@ -60,8 +94,7 @@ public class MuokkausController {
             uutinen.setOtsikko(otsikko);
             uutisRepo.save(uutinen);
         }
-        return "redirect:/muokkaus/"+uutisRepo.findByIdentifierAndOtsikko
-                    (uutinen.getIdentifier(),uutinen.getOtsikko()).getId();
+        return "redirect:/muokkaus/"+uutisRepo.findByIdentifier(uutinen.getIdentifier()).getId();
     }
     
     @RequestMapping(value="/muokkaus/{uutisId}", params="ingressi")
@@ -71,8 +104,7 @@ public class MuokkausController {
             uutinen.setIngressi(ingressi);
             uutisRepo.save(uutinen);
         }
-        return "redirect:/muokkaus/"+uutisRepo.findByIdentifierAndOtsikko
-                    (uutinen.getIdentifier(),uutinen.getOtsikko()).getId();
+        return "redirect:/muokkaus/"+ uutisRepo.findByIdentifier(uutinen.getIdentifier()).getId();
     }
     
     @RequestMapping(value="/muokkaus/{uutisId}", params="sisalto")
@@ -82,8 +114,7 @@ public class MuokkausController {
           uutinen.setSisalto(sisalto);
         uutisRepo.save(uutinen); 
         }
-        return "redirect:/muokkaus/"+uutisRepo.findByIdentifierAndOtsikko
-                    (uutinen.getIdentifier(),uutinen.getOtsikko()).getId();
+        return "redirect:/muokkaus/"+ uutisRepo.findByIdentifier(uutinen.getIdentifier()).getId();
     }
     
     @RequestMapping(value="/muokkaus/{uutisId}/lisaakategoria", params={"lisaakategoria"})
@@ -93,8 +124,7 @@ public class MuokkausController {
             uutinen.LisaaKategoria(Kategoria[lisaakategoria]);
             uutisRepo.save(uutinen);
         }
-        return "redirect:/muokkaus/"+uutisRepo.findByIdentifierAndOtsikko
-                    (uutinen.getIdentifier(),uutinen.getOtsikko()).getId();
+        return "redirect:/muokkaus/"+ uutisRepo.findByIdentifier(uutinen.getIdentifier()).getId();
     }
     
     @RequestMapping(value="/muokkaus/{uutisId}/poistakategoria", params="poistakategoria")
@@ -102,8 +132,7 @@ public class MuokkausController {
         Uutinen uutinen = uutisRepo.getOne(uutisId);
         uutinen.PoistaKategoria(poistakategoria);
         uutisRepo.save(uutinen);
-        return "redirect:/muokkaus/"+uutisRepo.findByIdentifierAndOtsikko
-                    (uutinen.getIdentifier(),uutinen.getOtsikko()).getId();
+        return "redirect:/muokkaus/"+ uutisRepo.findByIdentifier(uutinen.getIdentifier()).getId();
     }
     
     @RequestMapping(value="/muokkaus/{uutisId}/lisaakirjoittaja", params="lisaakirjoittaja")
@@ -114,8 +143,7 @@ public class MuokkausController {
             uutinen.LisaaKirjoittaja(lisaakirjoittaja);
         }
         uutisRepo.save(uutinen);
-        return "redirect:/muokkaus/"+uutisRepo.findByIdentifierAndOtsikko
-                    (uutinen.getIdentifier(),uutinen.getOtsikko()).getId();
+        return "redirect:/muokkaus/"+ uutisRepo.findByIdentifier(uutinen.getIdentifier()).getId();
     }
     
     @RequestMapping(value="/muokkaus/{uutisId}/poistakirjoittaja", params="poistakirjoittaja")
@@ -123,10 +151,10 @@ public class MuokkausController {
         Uutinen uutinen = uutisRepo.getOne(uutisId);
         uutinen.PoistaKirjoittaja(poistakirjoittaja);
         uutisRepo.save(uutinen);
-        return "redirect:/muokkaus/"+uutisRepo.findByIdentifierAndOtsikko
-                    (uutinen.getIdentifier(),uutinen.getOtsikko()).getId();
+        return "redirect:/muokkaus/"+ uutisRepo.findByIdentifier(uutinen.getIdentifier()).getId();
     }
     
+//    Kuvan lisäys uutiseen
     @PostMapping("/muokkaus/{uutisId}/lisaakuva")
     public String addKuva(@RequestParam("file") MultipartFile file, @PathVariable Long uutisId) throws IOException {
         try {
@@ -147,6 +175,7 @@ public class MuokkausController {
         return "redirect:/muokkaus/"+uutisId;
     }
     
+//    Kuvan haku tietokannasta
     @GetMapping(path = "/kuvat/{id}/content", produces = {"image/png", "image/jpeg", "image/gif"})
     @ResponseBody
     public byte[] getKuva(@PathVariable Long id) {

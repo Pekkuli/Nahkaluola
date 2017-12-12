@@ -1,0 +1,58 @@
+Uutisluola on uutisten katselua, luomista ja muokkaamista varten luotu sovellus.
+Uutisluola löytyy osoitteesta: https://uutisluola.herokuapp.com/
+github: https://github.com/Pekkuli/Uutisluola
+travis: https://travis-ci.org/Pekkuli/Uutisluola
+
+
+Etusivulla löytyy 5 uusinta uutista päivämäärän mukaan järjestettynä.
+
+Etusivun ylälaidassa on linkki uutisten hallintaan, jonne vain bob marley pääsee käsiksi.
+Etusivun ylälaidassa on myös linkit kaikkii palvelun kategorioihin, joista jokaisesta löytyy
+kategoriaan kuuluvat uutiset. 
+
+Jokaisella kategoriasivulla näkyy ylhäällä samat kategoriat listattuna, josta kategoriaa pystyy
+kätevästi vaihtamaan niin halutessaan. Jokaisesta kategoriasta pääsee myös uutisten hallintaan sekä
+etusivulle. Sivulta löytyy myös kätevä takaisin linkki, jota painamalla pääset aikaisemmalle sivulle,
+jolla olit.
+
+Yleisesti joka sivulla missä on listattuna uutisia, näkyy uutisista niiden otsikko, kuinka monta kertaa
+uutinen on luettu sekä uutisen päiväys ja kuten aikaisemmin sanoin nämä ovat listattuna
+päivämäärän mukaan uusin ensimmäisenä. 
+
+Yksittäiseen uutiseen pääsee käsiksi klikkaamalla kyseisen uutisen otsikkoa.
+
+Yksittäisen uutisen sivulla näkyy tuttu kategoria palkki ylhäällä, kuten myös linkki 
+uutisten hallintaan, etusivulle sekä takaisin-nappi. Yksittäisen uutisen sivulla ensimmäisenä
+uutisesta näkyy uutisen otsikko. Tämän jälkeen näkyy mahdollinen kuva, lista mahdollisista kategorioista sekä
+kirjoittajista. Tämän jälkeen näkyy uutisen ingressi ja sisältö.
+
+Bob marley ("bob" "marley") pääsee ainoa ihmisenä käsiksi uutisten hallintaan.
+Uutisten hallintasivulla näkyy tuttu kategoriapalkki+etusivu+takaisin-palkki.
+Tämän jälkeen lista mahdollisista olemassa olevista uutisista. Jokaisesta uutisesta näkyy samat 
+otsikko, luettu lkm ja päivämäärä, mutta myös kategoriat, josita uutisen löytää.
+Jokaisen uutisen perässä on "poista uutinen"-nappi, jota painamalla uutinen poistetaan.
+Alimpana löytyy "Luo uusi uutinen"-nappi, jota paianmalla uusi uutinen luodaan ja sinut ohjataan
+tämän uuden uutisen muokkaus sivulle. 
+
+Uutiselle luodaan automaattisesti otsikko "tyhjä[numerosarja]" sekä ingressi "tyhjä" ja sisältö "tyhjä". 
+Sivulta pystyy uutiseen lisäämän kuvan sekä muokkaamaan muita parametrejä.
+Jokainen ominaisuus pitää muokata yksitellen, esim. halutessaa muokata otsikkoa täytyy "uusi otsikko" ikkunaan
+kirjoittaa uusi otsikko ja painaa päivitä nappia. Et voi esimerkiksi muokata otsikkoa ja ingressiä samalla lisää
+napin painalluksella, nämä pitää tehdä erikseen. Yksittäisen uutisen sivulta ei näe tuttua "uutisten hallinta" 
+linkkiä vaan tilalla on "takaisin muokkaamaan"-linkki.
+
+Jos halutaan muokata tiettyä uutista päästään kyseisen uutisen muokkaussivulle klikkaamalla yleisellä
+muokkaussivulla halutun uutisen otsikkoa. Täällä näkyy samalla tavalla kuin uutisen luonnissa kyseisen uutisen parametrit.
+
+Halutessaan asentaa oma versio uutisluolasta, lataa paketti github-linkistä, joka on tämän tekstitiedoston yläosassa. 
+Uutisluola voidaan käynnistää ajamalla esim. netbeanssissa "Uutisluola/src/main/java/wad/Uutisluola.java".
+
+Uutisluolasta puuttuu muutamia ominaisuuksia ja osa ominaisuuksista on kompromissejä, puuttuvan ajan ja taidon takia.
+Uutisluolassa ei ole travis-testejä, uutisluola on kuitenkin kytketty travikseen ja valitettavasti, joka kerta ilmoittaa
+etteivät testit menneet läpi. Uutisluolassa ei ole myöskään sivutusta, jos uutisia tulee hyvin paljon, en 
+keksinyt/tiennyt tarpeeksi hyvää tapaa toteuttaa tätä. Myöskään en saanut toimimaan ominaisuutta järjestää uutiset
+viime viikon aikana tulleiden lukukertojen perusteella. Uutisia ei pysty myöskään hakemaan esim otsikon perusteella.
+Ei niinkään puute, mutta ongelmana oli saada lukukerat-ominaisuus toimimaan, joka kerta kun uutisen omalle sivulle mentiin
+tämä arvo nousi kahdella (2). Ei mitään ideaakaan. miksi tämä toimi näin, enkä tätä syytä keksinyt niin tein kompromissin ja
+muutin tämän arvon doubleksi ja jaoin kahdella. Tämän jälkeen lukukerrat kasvoi yhdellä, mutta nämä luvut olivat nyt muotoa x.0.
+Tämä ei vaikuta mihinkään, mutta tässä syy, jos pisti silmään ohjelmaa tutkiessa.
